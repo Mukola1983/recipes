@@ -22,7 +22,6 @@ export default class Utils {
   }
 
   static parseJSON = (response) => {
-    console.log(response)
     return response.json()
   }
 
