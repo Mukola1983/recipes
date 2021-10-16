@@ -49,7 +49,6 @@ function App() {
           <img alt="img" src={title.recipe.image} />
         </div>
       ))}
-      <Button variant="danger">click</Button>
     </div>
   )
 }
