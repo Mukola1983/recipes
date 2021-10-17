@@ -16,11 +16,7 @@ export default function RecipesCarusel() {
           }}
           key={item.recipe.image}
         >
-          <MyCard
-            imgSrc={item.recipe.image}
-            label={item.recipe.label}
-            ingredients={item.recipe.ingredients}
-          />
+          <MyCard recipe={item} />
         </Carousel.Item>
       ))}
     </Carousel>

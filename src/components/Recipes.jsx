@@ -1,17 +1,11 @@
 import React, { useCallback } from "react";
-import {
-  ButtonGroup,
-  Button,
-  Container,
-  Row,
-  InputGroup,
-  FormControl,
-  Col,
-} from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { showRecipesAction, changeRecipesName } from "../store/recipeReducer";
 import { searcRecipe } from "../API/recipes";
 import RecipesCarusel from "./RecipesCarusel";
+import MyButton from "./MyButton";
+import MyInput from "./MyInput";
 
 export default function Recipes() {
   const dispatch = useDispatch();
@@ -20,6 +14,7 @@ export default function Recipes() {
 
   const getRecipes = useCallback((name) => {
     searcRecipe(name).then((data) => {
+      console.log(data.hits);
       dispatch(showRecipesAction(data.hits));
       dispatch(changeRecipesName(""));
     });
@@ -35,28 +30,34 @@ export default function Recipes() {
       <Container style={{ margin: "20px" }}>
         <Row style={{}}>
           <Col>
-            <ButtonGroup>
-              <Button onClick={() => getRecipes(recipesName)}>
-                show recipes
-              </Button>
-            </ButtonGroup>
+            <MyButton
+              buttonText="show recipes"
+              buttonHandle={getRecipes}
+              argument={recipesName}
+            />
           </Col>
           <Col lg={8} md={6} sm={6} xs={6}>
-            <InputGroup size="sm" className="mb-3">
-              <InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
-              <FormControl
-                value={recipesName}
-                onChange={(e) => changeRecipes(e)}
-                aria-label="Small"
-                aria-describedby="inputGroup-sizing-sm"
-              />
-            </InputGroup>
+            <MyInput
+              inputName="Enter word"
+              inputHandle={changeRecipes}
+              value={recipesName}
+            />
           </Col>
         </Row>
       </Container>
 
       <Container>
-        <Row>{recipes.length > 0 ? <RecipesCarusel /> : <div>empty</div>}</Row>
+        <Row>
+          {recipes.length > 0 ? (
+            <RecipesCarusel />
+          ) : (
+            <div style={{ textAlign: "center", padding: "50px" }}>
+              <h2 style={{ color: "#DAA520", fontWeight: "bold" }}>
+                Recipes did not found !
+              </h2>
+            </div>
+          )}
+        </Row>
       </Container>
     </div>
   );
